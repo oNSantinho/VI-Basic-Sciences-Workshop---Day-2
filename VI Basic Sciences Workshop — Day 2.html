@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VI Basic Sciences Workshop – Day 2 | UNAD 2026</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --dark: #0a0e1a;
+            --dark2: #111827;
+            --border: rgba(255, 255, 255, 0.08);
+            --muted: #8b9ab5;
+            --blue: #4f9eff;
+            --purple: #a78bfa;
+            --teal: #2dd4bf;
+            --coral: #fb7c5b;
+            --amber: #fbbf24;
+            --green: #4ade80;
+            --blue-bg: rgba(79, 158, 255, 0.10);
+            --purple-bg: rgba(167, 139, 250, 0.10);
+            --teal-bg: rgba(45, 212, 191, 0.10);
+            --coral-bg: rgba(251, 124, 91, 0.10);
+            --amber-bg: rgba(251, 191, 36, 0.10);
+            --green-bg: rgba(74, 222, 128, 0.10);
+        }
+
+        body {
+            background: var(--dark);
+            color: #f0f4ff;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 40px 60px;
+        }
+
+        .dot-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        /* HEADER */
+        .header {
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #0f172a 100%);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            border-radius: 20px;
+            padding: 40px 44px;
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.22) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: 30%;
+            width: 300px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(79, 158, 255, 0.14) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .org-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--purple);
+            background: rgba(167, 139, 250, 0.12);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            border-radius: 100px;
+            padding: 5px 14px;
+            margin-bottom: 18px;
+        }
+
+        .org-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--purple);
+        }
+
+        .main-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 46px;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .main-title span {
+            color: var(--purple);
+            font-style: italic;
+        }
+
+        .main-sub {
+            font-size: 15px;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        /* SEC LABEL */
+        .sec-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sec-label::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: var(--muted);
+        }
+
+        /* INTRO */
+        .intro-wrap {
+            display: grid;
+            grid-template-columns: 1fr 210px;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .intro-box {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px 30px;
+            border-left: 3px solid var(--purple);
+        }
+
+        .intro-box p {
+            font-size: 14px;
+            line-height: 1.85;
+            color: #ccd6f6;
+            font-weight: 300;
+        }
+
+        .intro-visual {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        /* CARD */
+        .card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            z-index: 2;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            opacity: 0.09;
+            pointer-events: none;
+        }
+
+        .card-illo {
+            width: 100%;
+            height: 115px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .card-body-wrap {
+            padding: 20px 22px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card.blue {
+            border-color: rgba(79, 158, 255, 0.2);
+        }
+
+        .card.blue::before {
+            background: var(--blue);
+        }
+
+        .card.blue .card-glow {
+            background: var(--blue);
+        }
+
+        .card.blue .card-illo {
+            background: linear-gradient(135deg, #050e20, #0a1e3a);
+        }
+
+        .card.purple {
+            border-color: rgba(167, 139, 250, 0.2);
+        }
+
+        .card.purple::before {
+            background: var(--purple);
+        }
+
+        .card.purple .card-glow {
+            background: var(--purple);
+        }
+
+        .card.purple .card-illo {
+            background: linear-gradient(135deg, #0c0a1e, #18103c);
+        }
+
+        .card.teal {
+            border-color: rgba(45, 212, 191, 0.2);
+        }
+
+        .card.teal::before {
+            background: var(--teal);
+        }
+
+        .card.teal .card-glow {
+            background: var(--teal);
+        }
+
+        .card.teal .card-illo {
+            background: linear-gradient(135deg, #030f10, #061c1c);
+        }
+
+        .card.coral {
+            border-color: rgba(251, 124, 91, 0.2);
+        }
+
+        .card.coral::before {
+            background: var(--coral);
+        }
+
+        .card.coral .card-glow {
+            background: var(--coral);
+        }
+
+        .card.coral .card-illo {
+            background: linear-gradient(135deg, #120704, #20100a);
+        }
+
+        .card.amber {
+            border-color: rgba(251, 191, 36, 0.2);
+        }
+
+        .card.amber::before {
+            background: var(--amber);
+        }
+
+        .card.amber .card-glow {
+            background: var(--amber);
+        }
+
+        .card.amber .card-illo {
+            background: linear-gradient(135deg, #120e02, #1e1605);
+        }
+
+        .card.green {
+            border-color: rgba(74, 222, 128, 0.2);
+        }
+
+        .card.green::before {
+            background: var(--green);
+        }
+
+        .card.green .card-glow {
+            background: var(--green);
+        }
+
+        .card.green .card-illo {
+            background: linear-gradient(135deg, #041008, #071c0e);
+        }
+
+        .card-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .card-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .blue .card-icon {
+            background: var(--blue-bg);
+        }
+
+        .purple .card-icon {
+            background: var(--purple-bg);
+        }
+
+        .teal .card-icon {
+            background: var(--teal-bg);
+        }
+
+        .coral .card-icon {
+            background: var(--coral-bg);
+        }
+
+        .amber .card-icon {
+            background: var(--amber-bg);
+        }
+
+        .green .card-icon {
+            background: var(--green-bg);
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+
+        .card-speaker {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .card-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .blue .card-time {
+            background: var(--blue-bg);
+            color: var(--blue);
+        }
+
+        .purple .card-time {
+            background: var(--purple-bg);
+            color: var(--purple);
+        }
+
+        .teal .card-time {
+            background: var(--teal-bg);
+            color: var(--teal);
+        }
+
+        .coral .card-time {
+            background: var(--coral-bg);
+            color: var(--coral);
+        }
+
+        .amber .card-time {
+            background: var(--amber-bg);
+            color: var(--amber);
+        }
+
+        .green .card-time {
+            background: var(--green-bg);
+            color: var(--green);
+        }
+
+        .card-desc {
+            font-size: 12.5px;
+            line-height: 1.75;
+            color: #9baac9;
+            margin-bottom: 14px;
+            font-weight: 300;
+            flex: 1;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tag {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 3px 8px;
+            border-radius: 100px;
+            border: 1px solid;
+            text-transform: uppercase;
+        }
+
+        .blue .tag {
+            border-color: rgba(79, 158, 255, 0.3);
+            color: var(--blue);
+            background: var(--blue-bg);
+        }
+
+        .purple .tag {
+            border-color: rgba(167, 139, 250, 0.3);
+            color: var(--purple);
+            background: var(--purple-bg);
+        }
+
+        .teal .tag {
+            border-color: rgba(45, 212, 191, 0.3);
+            color: var(--teal);
+            background: var(--teal-bg);
+        }
+
+        .coral .tag {
+            border-color: rgba(251, 124, 91, 0.3);
+            color: var(--coral);
+            background: var(--coral-bg);
+        }
+
+        .amber .tag {
+            border-color: rgba(251, 191, 36, 0.3);
+            color: var(--amber);
+            background: var(--amber-bg);
+        }
+
+        .green .tag {
+            border-color: rgba(74, 222, 128, 0.3);
+            color: var(--green);
+            background: var(--green-bg);
+        }
+
+        /* CONCLUSION */
+        .conclusion {
+            background: linear-gradient(135deg, #080f08, #111827);
+            border: 1px solid rgba(74, 222, 128, 0.18);
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-bottom: 28px;
+            border-left: 3px solid var(--green);
+            display: grid;
+            grid-template-columns: 1fr 150px;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .conclusion p {
+            font-size: 13.5px;
+            line-height: 1.9;
+            color: #b8d4c8;
+            font-weight: 300;
+        }
+
+        /* FOOTER */
+        .footer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .footer-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px 24px;
+        }
+
+        .footer-row {
+            margin-bottom: 11px;
+        }
+
+        .footer-row-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+
+        .footer-row-val {
+            font-size: 12.5px;
+            color: #c8d8f0;
+            line-height: 1.5;
+        }
+
+        .footer-card a {
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 12px;
+            word-break: break-all;
+        }
+
+        .credit-card {
+            background: linear-gradient(135deg, #1a1130, #111827);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .credit-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .credit-sub {
+            font-size: 11.5px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* --- NEW STYLES FOR INTERACTIVITY --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .page {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* FLOATING NAVIGATION */
+        .nav-bar {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Update card for tilt & Interaction */
+        .card {
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            will-change: transform;
+            transition: border-color 0.3s ease, box-shadow 0.4s ease, transform 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 20px 50px rgba(255,255,255,0.05), 0 0 40px var(--glow-color, rgba(255,255,255,0.1));
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        .card.blue { --glow-color: rgba(79, 158, 255, 0.4); }
+        .card.purple { --glow-color: rgba(167, 139, 250, 0.4); }
+        .card.teal { --glow-color: rgba(45, 212, 191, 0.4); }
+        .card.coral { --glow-color: rgba(251, 124, 91, 0.4); }
+        .card.amber { --glow-color: rgba(251, 191, 36, 0.4); }
+        .card.green { --glow-color: rgba(74, 222, 128, 0.4); }
+
+        .card-illo {
+            transform: translateZ(30px);
+            transition: transform 0.3s ease;
+        }
+        .card-body-wrap {
+            transform: translateZ(20px);
+            transition: transform 0.3s ease;
+        }
+        .card:hover .card-illo {
+            transform: translateZ(50px) scale(1.05);
+        }
+        .card:hover .card-body-wrap {
+            transform: translateZ(40px);
+        }
+
+        /* Truncate text for grid view */
+        .grid .card-desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 8px;
+        }
+
+        .click-more {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.4);
+            font-weight: 700;
+            margin-bottom: 14px;
+            transition: color 0.3s;
+        }
+        .card:hover .click-more {
+            color: #fff;
+        }
+
+        /* MODAL STYLES */
+        #modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 8, 15, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        #modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #modal-content {
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: scale(0.9) translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #modal-overlay.active #modal-content {
+            transform: scale(1) translateY(0);
+        }
+        .close-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .close-btn:hover {
+            opacity: 1;
+        }
+        /* Modal Card Overrides */
+        #modal-body .card {
+            cursor: default;
+            box-shadow: 0 0 80px var(--glow-color, rgba(255,255,255,0.1));
+            transform: none !important;
+            transition: none;
+        }
+        #modal-body .card:hover {
+            box-shadow: 0 0 80px var(--glow-color, rgba(255,255,255,0.1));
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        #modal-body .card-desc {
+            -webkit-line-clamp: unset;
+            display: block;
+            font-size: 14px;
+        }
+        #modal-body .click-more {
+            display: none;
+        }
+        #modal-body .card-glow {
+            opacity: 0.25; 
+            width: 300px;
+            height: 300px;
+        }
+        #modal-body .card-illo {
+            height: 180px;
+            transform: none !important;
+        }
+        #modal-body .card-body-wrap {
+            transform: none !important;
+        }
+        #modal-body .card-illo svg {
+            transform: scale(1.3);
+        }
+    </style>
+    <!-- TS Particles & Vanilla Tilt -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+</head>
+
+<body>
+    <div id="tsparticles"></div>
+    <div class="page">
+
+        <!-- NAVIGATION -->
+        <nav class="nav-bar">
+            <a href="#intro" class="nav-link">Intro</a>
+            <a href="#bubbles" class="nav-link">Bubbles</a>
+            <a href="#steam" class="nav-link">STEAM</a>
+            <a href="#telemetry" class="nav-link">Telemetry</a>
+            <a href="#lhc" class="nav-link">LHC</a>
+            <a href="#ai" class="nav-link">AI</a>
+            <a href="#biogas" class="nav-link">Biogas</a>
+        </nav>
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-inner">
+                <div class="header-text">
+                    <div class="org-tag">
+                        <div class="org-dot"></div> UNAD · Universidad Nacional Abierta y a Distancia
+                    </div>
+                    <h1 class="main-title">VI Basic Sciences<br><span>Workshop</span> — Day 2</h1>
+                    <p class="main-sub">A day of science, innovation and interdisciplinary knowledge · April 15, 2026
+                    </p>
+                </div>
+                <svg width="155" height="155" viewBox="0 0 155 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="77" cy="77" rx="68" ry="27" stroke="rgba(167,139,250,0.38)" stroke-width="1.2"
+                        stroke-dasharray="4 3" />
+                    <ellipse cx="77" cy="77" rx="68" ry="27" stroke="rgba(79,158,255,0.28)" stroke-width="1"
+                        stroke-dasharray="3 4" transform="rotate(60 77 77)" />
+                    <ellipse cx="77" cy="77" rx="68" ry="27" stroke="rgba(45,212,191,0.22)" stroke-width="1"
+                        stroke-dasharray="4 3" transform="rotate(120 77 77)" />
+                    <circle cx="77" cy="77" r="14" fill="rgba(167,139,250,0.14)" stroke="rgba(167,139,250,0.5)"
+                        stroke-width="1.5" />
+                    <circle cx="77" cy="77" r="7" fill="rgba(167,139,250,0.4)" />
+                    <circle cx="77" cy="77" r="3" fill="#fff" />
+                    <circle cx="145" cy="77" r="5" fill="var(--blue)" opacity="0.9" />
+                    <circle cx="42" cy="37" r="4" fill="var(--purple)" opacity="0.9" />
+                    <circle cx="42" cy="117" r="4" fill="var(--teal)" opacity="0.9" />
+                    <circle cx="16" cy="18" r="1.5" fill="white" opacity="0.5" />
+                    <circle cx="138" cy="14" r="1" fill="white" opacity="0.4" />
+                    <circle cx="10" cy="128" r="1.5" fill="white" opacity="0.4" />
+                    <circle cx="144" cy="138" r="1" fill="white" opacity="0.5" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- INTRO -->
+        <div id="intro" class="sec-label">Introduction</div>
+        <div class="intro-wrap">
+            <div class="intro-box">
+                <p>The VI Basic Sciences Workshop — Day 2 was a full-day academic event organized by UNAD, bringing
+                    together researchers, professors, and students to explore how foundational disciplines — Physics,
+                    Chemistry, Biology, and Mathematics — drive innovation across industry, education, and emerging
+                    technologies. Over 9 hours of live sessions, leading speakers presented cutting-edge applications
+                    from particle physics to renewable energy, highlighting the critical role of basic sciences in
+                    solving 21st-century challenges.</p>
+            </div>
+            <div class="intro-visual">
+                <svg width="186" height="186" viewBox="0 0 186 186" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="8" width="80" height="80" rx="14" fill="rgba(251,124,91,0.08)"
+                        stroke="rgba(251,124,91,0.3)" stroke-width="1" />
+                    <text x="48" y="38" font-family="Space Grotesk,sans-serif" font-size="26" text-anchor="middle"
+                        fill="rgba(251,124,91,0.85)">⚛</text>
+                    <text x="48" y="58" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700"
+                        text-anchor="middle" fill="rgba(251,124,91,0.65)" letter-spacing="0.08em">PHYSICS</text>
+                    <rect x="98" y="8" width="80" height="80" rx="14" fill="rgba(79,158,255,0.08)"
+                        stroke="rgba(79,158,255,0.3)" stroke-width="1" />
+                    <text x="138" y="38" font-family="Space Grotesk,sans-serif" font-size="26" text-anchor="middle"
+                        fill="rgba(79,158,255,0.85)">⚗</text>
+                    <text x="138" y="58" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700"
+                        text-anchor="middle" fill="rgba(79,158,255,0.65)" letter-spacing="0.08em">CHEMISTRY</text>
+                    <rect x="8" y="98" width="80" height="80" rx="14" fill="rgba(74,222,128,0.08)"
+                        stroke="rgba(74,222,128,0.3)" stroke-width="1" />
+                    <text x="48" y="128" font-family="Space Grotesk,sans-serif" font-size="26" text-anchor="middle"
+                        fill="rgba(74,222,128,0.85)">🧬</text>
+                    <text x="48" y="148" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700"
+                        text-anchor="middle" fill="rgba(74,222,128,0.65)" letter-spacing="0.08em">BIOLOGY</text>
+                    <rect x="98" y="98" width="80" height="80" rx="14" fill="rgba(167,139,250,0.08)"
+                        stroke="rgba(167,139,250,0.3)" stroke-width="1" />
+                    <text x="138" y="128" font-family="Space Grotesk,sans-serif" font-size="28" text-anchor="middle"
+                        fill="rgba(167,139,250,0.85)">∑</text>
+                    <text x="138" y="148" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700"
+                        text-anchor="middle" fill="rgba(167,139,250,0.65)" letter-spacing="0.08em">MATH</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- THEMATIC BLOCKS -->
+        <div class="sec-label">Thematic blocks</div>
+        <div class="grid">
+
+            <!-- 1 BUBBLES -->
+            <div id="bubbles" class="card blue" data-tilt data-tilt-max="6" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="card-glow"></div>
+                <div class="card-illo">
+                    <svg width="380" height="115" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="190" cy="57" r="38" stroke="rgba(79,158,255,0.55)" stroke-width="1.5"
+                            fill="rgba(79,158,255,0.05)" />
+                        <circle cx="190" cy="57" r="24" stroke="rgba(79,158,255,0.35)" stroke-width="1"
+                            fill="rgba(79,158,255,0.07)" />
+                        <circle cx="108" cy="60" r="26" stroke="rgba(79,158,255,0.48)" stroke-width="1.2"
+                            fill="rgba(79,158,255,0.05)" />
+                        <circle cx="272" cy="58" r="20" stroke="rgba(79,158,255,0.42)" stroke-width="1"
+                            fill="rgba(79,158,255,0.05)" />
+                        <circle cx="58" cy="38" r="14" stroke="rgba(79,158,255,0.32)" stroke-width="1"
+                            fill="rgba(79,158,255,0.04)" />
+                        <circle cx="326" cy="36" r="16" stroke="rgba(79,158,255,0.28)" stroke-width="1"
+                            fill="rgba(79,158,255,0.03)" />
+                        <circle cx="40" cy="80" r="9" stroke="rgba(79,158,255,0.25)" stroke-width="0.8" fill="none" />
+                        <circle cx="344" cy="78" r="10" stroke="rgba(79,158,255,0.25)" stroke-width="0.8" fill="none" />
+                        <circle cx="155" cy="18" r="7" stroke="rgba(79,158,255,0.22)" stroke-width="0.8" fill="none" />
+                        <circle cx="232" cy="16" r="5" stroke="rgba(79,158,255,0.18)" stroke-width="0.8" fill="none" />
+                        <circle cx="174" cy="43" r="6" fill="rgba(255,255,255,0.07)" />
+                        <circle cx="94" cy="50" r="4" fill="rgba(255,255,255,0.06)" />
+                        <text x="190" y="61" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600"
+                            text-anchor="middle" fill="rgba(79,158,255,0.85)">H₂O · SOAP · ULTRASOUND</text>
+                    </svg>
+                </div>
+                <div class="card-body-wrap">
+                    <div class="card-head">
+                        <div class="card-icon">💧</div>
+                        <div>
+                            <div class="card-title">Applications of Bubbles</div>
+                            <div class="card-speaker">Dr. Mata Ramírez</div>
+                        </div>
+                    </div>
+                    <div class="card-time">0:56:59 – 1:03:50</div>
+                    <p class="card-desc">Bubble physics underpins critical industrial processes — from texture and
+                        stability in food products to cosmetics formulation, and ultrasonic cleaning that disinfects
+                        surgical instruments with precision.</p>
+                    <div class="click-more">Click to expand ✦</div>
+                    <div class="tags"><span class="tag">Food Industry</span><span class="tag">Cosmetics</span><span
+                            class="tag">Ultrasound</span><span class="tag">Surgery</span></div>
+                </div>
+            </div>
+
+            <!-- 2 STEAM -->
+            <div id="steam" class="card purple" data-tilt data-tilt-max="6" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="card-glow"></div>
+                <div class="card-illo">
+                    <svg width="380" height="115" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="166" y="28" width="48" height="40" rx="6" fill="rgba(167,139,250,0.1)"
+                            stroke="rgba(167,139,250,0.5)" stroke-width="1.5" />
+                        <rect x="174" y="12" width="32" height="20" rx="5" fill="rgba(167,139,250,0.12)"
+                            stroke="rgba(167,139,250,0.5)" stroke-width="1.5" />
+                        <circle cx="183" cy="22" r="3.5" fill="rgba(167,139,250,0.85)" />
+                        <circle cx="197" cy="22" r="3.5" fill="rgba(167,139,250,0.85)" />
+                        <circle cx="184" cy="22" r="1.5" fill="#fff" />
+                        <circle cx="198" cy="22" r="1.5" fill="#fff" />
+                        <line x1="190" y1="12" x2="190" y2="4" stroke="rgba(167,139,250,0.6)" stroke-width="1.5" />
+                        <circle cx="190" cy="3" r="2.5" fill="rgba(167,139,250,0.8)" />
+                        <rect x="138" y="34" width="28" height="10" rx="5" fill="rgba(167,139,250,0.08)"
+                            stroke="rgba(167,139,250,0.4)" stroke-width="1" />
+                        <rect x="214" y="34" width="28" height="10" rx="5" fill="rgba(167,139,250,0.08)"
+                            stroke="rgba(167,139,250,0.4)" stroke-width="1" />
+                        <rect x="172" y="68" width="13" height="24" rx="4" fill="rgba(167,139,250,0.08)"
+                            stroke="rgba(167,139,250,0.4)" stroke-width="1" />
+                        <rect x="195" y="68" width="13" height="24" rx="4" fill="rgba(167,139,250,0.08)"
+                            stroke="rgba(167,139,250,0.4)" stroke-width="1" />
+                        <text x="66" y="52" font-family="Space Grotesk,sans-serif" font-size="26"
+                            fill="rgba(167,139,250,0.38)" font-weight="700">∑</text>
+                        <text x="298" y="55" font-family="Space Grotesk,sans-serif" font-size="22"
+                            fill="rgba(167,139,250,0.32)" font-weight="700">π</text>
+                        <text x="88" y="88" font-family="Space Grotesk,sans-serif" font-size="16"
+                            fill="rgba(167,139,250,0.28)" font-weight="700">f(x)</text>
+                        <text x="278" y="88" font-family="Space Grotesk,sans-serif" font-size="16"
+                            fill="rgba(167,139,250,0.28)" font-weight="700">∫dx</text>
+                        <text x="190" y="108" font-family="Space Grotesk,sans-serif" font-size="10" font-weight="700"
+                            text-anchor="middle" letter-spacing="0.16em" fill="rgba(167,139,250,0.6)">S T E A M</text>
+                    </svg>
+                </div>
+                <div class="card-body-wrap">
+                    <div class="card-head">
+                        <div class="card-icon">🤖</div>
+                        <div>
+                            <div class="card-title">STEAM Education & Robotics</div>
+                            <div class="card-speaker">Mgtr. Lina María Toro Quintero</div>
+                        </div>
+                    </div>
+                    <div class="card-time">2:00:32 – 2:21:18</div>
+                    <p class="card-desc">Hands-on projects integrating mathematics and robotics argue that STEAM
+                        education is a powerful tool to bridge socioeconomic gaps — equipping students with critical
+                        thinking and scientific mindsets.</p>
+                    <div class="click-more">Click to expand ✦</div>
+                    <div class="tags"><span class="tag">STEAM</span><span class="tag">Robotics</span><span
+                            class="tag">Social Equity</span><span class="tag">Math</span></div>
+                </div>
+            </div>
+
+            <!-- 3 TELEMETRY -->
+            <div id="telemetry" class="card teal" data-tilt data-tilt-max="6" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="card-glow"></div>
+                <div class="card-illo">
+                    <svg width="380" height="115" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="190" y1="95" x2="190" y2="18" stroke="rgba(45,212,191,0.6)" stroke-width="2" />
+                        <line x1="172" y1="95" x2="208" y2="95" stroke="rgba(45,212,191,0.5)" stroke-width="1.5" />
+                        <line x1="178" y1="78" x2="202" y2="78" stroke="rgba(45,212,191,0.4)" stroke-width="1" />
+                        <line x1="183" y1="62" x2="197" y2="62" stroke="rgba(45,212,191,0.35)" stroke-width="1" />
+                        <path d="M190 18 Q144 30 122 60" stroke="rgba(45,212,191,0.5)" stroke-width="1.2" fill="none"
+                            stroke-dasharray="4 3" />
+                        <path d="M190 18 Q130 44 96 78" stroke="rgba(45,212,191,0.32)" stroke-width="1" fill="none"
+                            stroke-dasharray="3 4" />
+                        <path d="M190 18 Q114 56 72 96" stroke="rgba(45,212,191,0.18)" stroke-width="0.8" fill="none"
+                            stroke-dasharray="3 5" />
+                        <path d="M190 18 Q236 30 258 60" stroke="rgba(45,212,191,0.5)" stroke-width="1.2" fill="none"
+                            stroke-dasharray="4 3" />
+                        <path d="M190 18 Q250 44 284 78" stroke="rgba(45,212,191,0.32)" stroke-width="1" fill="none"
+                            stroke-dasharray="3 4" />
+                        <path d="M190 18 Q266 56 308 96" stroke="rgba(45,212,191,0.18)" stroke-width="0.8" fill="none"
+                            stroke-dasharray="3 5" />
+                        <circle cx="190" cy="16" r="5" fill="rgba(45,212,191,0.85)" />
+                        <circle cx="190" cy="16" r="10" fill="none" stroke="rgba(45,212,191,0.4)" stroke-width="1" />
+                        <rect x="54" y="52" width="28" height="13" rx="4" fill="rgba(45,212,191,0.12)"
+                            stroke="rgba(45,212,191,0.4)" stroke-width="0.8" />
+                        <text x="68" y="62" font-family="JetBrains Mono,monospace" font-size="7" text-anchor="middle"
+                            fill="rgba(45,212,191,0.75)">DATA</text>
+                        <rect x="298" y="52" width="28" height="13" rx="4" fill="rgba(45,212,191,0.12)"
+                            stroke="rgba(45,212,191,0.4)" stroke-width="0.8" />
+                        <text x="312" y="62" font-family="JetBrains Mono,monospace" font-size="7" text-anchor="middle"
+                            fill="rgba(45,212,191,0.75)">DATA</text>
+                        <text x="190" y="110" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600"
+                            text-anchor="middle" fill="rgba(45,212,191,0.55)" letter-spacing="0.1em">REAL-TIME
+                            MONITORING</text>
+                    </svg>
+                </div>
+                <div class="card-body-wrap">
+                    <div class="card-head">
+                        <div class="card-icon">📡</div>
+                        <div>
+                            <div class="card-title">Telemetry & Engineering</div>
+                            <div class="card-speaker">Workshop Panel</div>
+                        </div>
+                    </div>
+                    <div class="card-time">3:07:51 – 3:12:51</div>
+                    <p class="card-desc">Remote data collection and transmission is essential for real-time monitoring
+                        of complex systems. These data streams feed AI models supporting trend analysis, predictive
+                        maintenance, and automated decisions.</p>
+                    <div class="click-more">Click to expand ✦</div>
+                    <div class="tags"><span class="tag">Real-Time Data</span><span class="tag">IoT</span><span
+                            class="tag">AI Feeds</span></div>
+                </div>
+            </div>
+
+            <!-- 4 LHC -->
+            <div id="lhc" class="card coral" data-tilt data-tilt-max="6" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="card-glow"></div>
+                <div class="card-illo">
+                    <svg width="380" height="115" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="190" cy="57" r="46" stroke="rgba(251,124,91,0.4)" stroke-width="8" fill="none" />
+                        <circle cx="190" cy="57" r="46" stroke="rgba(251,124,91,0.7)" stroke-width="1.5" fill="none" />
+                        <circle cx="190" cy="57" r="46" stroke="rgba(255,210,80,0.45)" stroke-width="1" fill="none"
+                            stroke-dasharray="6 66" stroke-dashoffset="0" />
+                        <circle cx="190" cy="57" r="46" stroke="rgba(255,210,80,0.45)" stroke-width="1" fill="none"
+                            stroke-dasharray="6 66" stroke-dashoffset="36" />
+                        <circle cx="190" cy="11" r="6" fill="rgba(251,124,91,0.9)" />
+                        <line x1="190" y1="5" x2="190" y2="-2" stroke="rgba(255,240,100,0.85)" stroke-width="1.8" />
+                        <line x1="196" y1="7" x2="202" y2="0" stroke="rgba(255,240,100,0.7)" stroke-width="1.4" />
+                        <line x1="184" y1="7" x2="178" y2="0" stroke="rgba(255,240,100,0.7)" stroke-width="1.4" />
+                        <line x1="200" y1="12" x2="208" y2="8" stroke="rgba(255,240,100,0.55)" stroke-width="1.2" />
+                        <line x1="180" y1="12" x2="172" y2="8" stroke="rgba(255,240,100,0.55)" stroke-width="1.2" />
+                        <rect x="145" y="44" width="90" height="26" rx="7" fill="rgba(251,124,91,0.1)"
+                            stroke="rgba(251,124,91,0.38)" stroke-width="1" />
+                        <text x="190" y="61" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="700"
+                            text-anchor="middle" fill="rgba(251,124,91,0.92)">HIGGS BOSON</text>
+                        <circle cx="144" cy="57" r="7" fill="rgba(251,124,91,0.18)" stroke="rgba(251,124,91,0.5)"
+                            stroke-width="1" />
+                        <circle cx="236" cy="57" r="7" fill="rgba(251,124,91,0.18)" stroke="rgba(251,124,91,0.5)"
+                            stroke-width="1" />
+                        <circle cx="190" cy="103" r="7" fill="rgba(251,124,91,0.18)" stroke="rgba(251,124,91,0.5)"
+                            stroke-width="1" />
+                        <text x="190" y="113" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600"
+                            text-anchor="middle" fill="rgba(251,124,91,0.5)" letter-spacing="0.12em">LHC · CERN</text>
+                    </svg>
+                </div>
+                <div class="card-body-wrap">
+                    <div class="card-head">
+                        <div class="card-icon">⚛️</div>
+                        <div>
+                            <div class="card-title">High-Energy Physics & the LHC</div>
+                            <div class="card-speaker">Alan & Panel Speakers</div>
+                        </div>
+                    </div>
+                    <div class="card-time">5:08:37 – 6:23:01</div>
+                    <p class="card-desc">The Large Hadron Collider accelerates particles to near-light speed to study
+                        elementary matter. Random Forest ML algorithms sift billions of collisions to identify the Higgs
+                        boson, bridging physics and computing.</p>
+                    <div class="click-more">Click to expand ✦</div>
+                    <div class="tags"><span class="tag">LHC / CERN</span><span class="tag">Higgs Boson</span><span
+                            class="tag">Random Forest</span><span class="tag">ML</span></div>
+                </div>
+            </div>
+
+            <!-- 5 AI -->
+            <div id="ai" class="card amber" data-tilt data-tilt-max="6" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="card-glow"></div>
+                <div class="card-illo">
+                    <svg width="380" height="115" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="70" cy="28" r="9" fill="rgba(251,191,36,0.12)" stroke="rgba(251,191,36,0.5)"
+                            stroke-width="1.5" />
+                        <circle cx="70" cy="57" r="9" fill="rgba(251,191,36,0.12)" stroke="rgba(251,191,36,0.5)"
+                            stroke-width="1.5" />
+                        <circle cx="70" cy="86" r="9" fill="rgba(251,191,36,0.12)" stroke="rgba(251,191,36,0.5)"
+                            stroke-width="1.5" />
+                        <circle cx="148" cy="20" r="10" fill="rgba(251,191,36,0.17)" stroke="rgba(251,191,36,0.6)"
+                            stroke-width="1.5" />
+                        <circle cx="148" cy="52" r="10" fill="rgba(251,191,36,0.17)" stroke="rgba(251,191,36,0.6)"
+                            stroke-width="1.5" />
+                        <circle cx="148" cy="84" r="10" fill="rgba(251,191,36,0.17)" stroke="rgba(251,191,36,0.6)"
+                            stroke-width="1.5" />
+                        <circle cx="228" cy="30" r="13" fill="rgba(251,191,36,0.22)" stroke="rgba(251,191,36,0.7)"
+                            stroke-width="1.8" />
+                        <circle cx="228" cy="72" r="13" fill="rgba(251,191,36,0.22)" stroke="rgba(251,191,36,0.7)"
+                            stroke-width="1.8" />
+                        <circle cx="308" cy="50" r="15" fill="rgba(251,191,36,0.28)" stroke="rgba(251,191,36,0.82)"
+                            stroke-width="2" />
+                        <text x="308" y="55" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="700"
+                            text-anchor="middle" fill="rgba(251,191,36,0.95)">AI</text>
+                        <line x1="79" y1="28" x2="138" y2="22" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="79" y1="28" x2="138" y2="52" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="79" y1="57" x2="138" y2="22" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="79" y1="57" x2="138" y2="52" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="79" y1="57" x2="138" y2="84" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="79" y1="86" x2="138" y2="52" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="79" y1="86" x2="138" y2="84" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="158" y1="22" x2="215" y2="32" stroke="rgba(251,191,36,0.22)" stroke-width="0.8" />
+                        <line x1="158" y1="22" x2="215" y2="70" stroke="rgba(251,191,36,0.18)" stroke-width="0.8" />
+                        <line x1="158" y1="52" x2="215" y2="32" stroke="rgba(251,191,36,0.22)" stroke-width="0.8" />
+                        <line x1="158" y1="52" x2="215" y2="70" stroke="rgba(251,191,36,0.22)" stroke-width="0.8" />
+                        <line x1="158" y1="84" x2="215" y2="70" stroke="rgba(251,191,36,0.22)" stroke-width="0.8" />
+                        <line x1="241" y1="34" x2="293" y2="50" stroke="rgba(251,191,36,0.4)" stroke-width="1.2" />
+                        <line x1="241" y1="68" x2="293" y2="50" stroke="rgba(251,191,36,0.4)" stroke-width="1.2" />
+                        <text x="190" y="108" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600"
+                            text-anchor="middle" fill="rgba(251,191,36,0.52)" letter-spacing="0.1em">NEURAL NETWORK ·
+                            LLM · VISION</text>
+                    </svg>
+                </div>
+                <div class="card-body-wrap">
+                    <div class="card-head">
+                        <div class="card-icon">🧠</div>
+                        <div>
+                            <div class="card-title">Artificial Intelligence & Data</div>
+                            <div class="card-speaker">Workshop Panel</div>
+                        </div>
+                    </div>
+                    <div class="card-time">6:34:01 – 8:08:37</div>
+                    <p class="card-desc">Applied AI across diverse use cases: computer vision for oil well inspection,
+                        image analysis for embryo evaluation in biomedicine, and LLMs enabling domain experts to query
+                        complex data via natural prompts.</p>
+                    <div class="click-more">Click to expand ✦</div>
+                    <div class="tags"><span class="tag">LLMs</span><span class="tag">Computer Vision</span><span
+                            class="tag">Oil Industry</span><span class="tag">Biomedicine</span></div>
+                </div>
+            </div>
+
+            <!-- 6 BIODIGESTER -->
+            <div id="biogas" class="card green" data-tilt data-tilt-max="6" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="card-glow"></div>
+                <div class="card-illo">
+                    <svg width="380" height="115" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="190" cy="82" rx="48" ry="20" fill="rgba(74,222,128,0.07)"
+                            stroke="rgba(74,222,128,0.38)" stroke-width="1.5" />
+                        <rect x="142" y="36" width="96" height="46" fill="rgba(74,222,128,0.07)"
+                            stroke="rgba(74,222,128,0.38)" stroke-width="1.5" />
+                        <ellipse cx="190" cy="36" rx="48" ry="20" fill="rgba(74,222,128,0.11)"
+                            stroke="rgba(74,222,128,0.48)" stroke-width="1.5" />
+                        <circle cx="180" cy="22" r="4.5" fill="rgba(74,222,128,0.18)" stroke="rgba(74,222,128,0.5)"
+                            stroke-width="1" />
+                        <circle cx="196" cy="14" r="3.5" fill="rgba(74,222,128,0.15)" stroke="rgba(74,222,128,0.45)"
+                            stroke-width="1" />
+                        <circle cx="186" cy="7" r="3" fill="rgba(74,222,128,0.12)" stroke="rgba(74,222,128,0.38)"
+                            stroke-width="0.8" />
+                        <circle cx="202" cy="6" r="2.2" fill="none" stroke="rgba(74,222,128,0.32)" stroke-width="0.8" />
+                        <circle cx="190" cy="2" r="1.5" fill="none" stroke="rgba(74,222,128,0.25)" stroke-width="0.7" />
+                        <rect x="58" y="46" width="54" height="28" rx="7" fill="rgba(74,222,128,0.09)"
+                            stroke="rgba(74,222,128,0.38)" stroke-width="1" />
+                        <text x="85" y="62" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600"
+                            text-anchor="middle" fill="rgba(74,222,128,0.8)">IoT</text>
+                        <text x="85" y="72" font-family="JetBrains Mono,monospace" font-size="7" text-anchor="middle"
+                            fill="rgba(74,222,128,0.6)">SENSOR</text>
+                        <line x1="112" y1="60" x2="142" y2="60" stroke="rgba(74,222,128,0.38)" stroke-width="1"
+                            stroke-dasharray="3 2" />
+                        <rect x="268" y="46" width="54" height="28" rx="7" fill="rgba(74,222,128,0.09)"
+                            stroke="rgba(74,222,128,0.38)" stroke-width="1" />
+                        <text x="295" y="62" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600"
+                            text-anchor="middle" fill="rgba(74,222,128,0.8)">NLP</text>
+                        <text x="295" y="72" font-family="JetBrains Mono,monospace" font-size="7" text-anchor="middle"
+                            fill="rgba(74,222,128,0.6)">ENGINE</text>
+                        <line x1="238" y1="60" x2="268" y2="60" stroke="rgba(74,222,128,0.38)" stroke-width="1"
+                            stroke-dasharray="3 2" />
+                        <text x="190" y="62" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="700"
+                            text-anchor="middle" fill="rgba(74,222,128,0.72)">BIOGAS</text>
+                        <text x="190" y="108" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600"
+                            text-anchor="middle" fill="rgba(74,222,128,0.52)" letter-spacing="0.1em">RENEWABLE ENERGY ·
+                            AUTOMATION</text>
+                    </svg>
+                </div>
+                <div class="card-body-wrap">
+                    <div class="card-head">
+                        <div class="card-icon">🌿</div>
+                        <div>
+                            <div class="card-title">Biodigesters & Renewable Energy</div>
+                            <div class="card-speaker">Angie</div>
+                        </div>
+                    </div>
+                    <div class="card-time">8:33:28 – 8:48:19</div>
+                    <p class="card-desc">An IoT-powered system automates biodigester monitoring, converting organic
+                        waste into biogas. Integrated NLP lets users query data in plain language, making renewable
+                        energy accessible to small communities.</p>
+                    <div class="click-more">Click to expand ✦</div>
+                    <div class="tags"><span class="tag">Biogas</span><span class="tag">IoT</span><span
+                            class="tag">NLP</span><span class="tag">Sustainability</span></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONCLUSION -->
+        <div class="sec-label">Conclusion</div>
+        <div class="conclusion">
+            <p>The VI Basic Sciences Workshop — Day 2 demonstrated that foundational sciences are the engine behind
+                technological innovation, social progress, and scientific discovery. From the microscopic world of
+                bubbles and subatomic particles to AI-powered systems and renewable energy, every session reinforced a
+                single message: a strong grounding in Physics, Chemistry, Biology, and Mathematics is indispensable for
+                solving the complex challenges of the 21st century. UNAD continues to position itself as a leading space
+                where basic science and applied technology converge to build a better future.</p>
+            <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="70" cy="70" r="60" fill="rgba(74,222,128,0.05)" stroke="rgba(74,222,128,0.18)"
+                    stroke-width="1" />
+                <circle cx="70" cy="58" r="24" fill="rgba(74,222,128,0.09)" stroke="rgba(74,222,128,0.42)"
+                    stroke-width="1.5" />
+                <circle cx="70" cy="58" r="13" fill="rgba(74,222,128,0.18)" />
+                <text x="70" y="63" font-family="Space Grotesk,sans-serif" font-size="16" text-anchor="middle"
+                    fill="rgba(74,222,128,0.85)">💡</text>
+                <line x1="70" y1="26" x2="70" y2="18" stroke="rgba(74,222,128,0.5)" stroke-width="1.5"
+                    stroke-linecap="round" />
+                <line x1="91" y1="33" x2="96" y2="27" stroke="rgba(74,222,128,0.4)" stroke-width="1.2"
+                    stroke-linecap="round" />
+                <line x1="49" y1="33" x2="44" y2="27" stroke="rgba(74,222,128,0.4)" stroke-width="1.2"
+                    stroke-linecap="round" />
+                <line x1="100" y1="55" x2="108" y2="53" stroke="rgba(74,222,128,0.35)" stroke-width="1.2"
+                    stroke-linecap="round" />
+                <line x1="40" y1="55" x2="32" y2="53" stroke="rgba(74,222,128,0.35)" stroke-width="1.2"
+                    stroke-linecap="round" />
+                <rect x="60" y="80" width="20" height="5" rx="2" fill="rgba(74,222,128,0.28)"
+                    stroke="rgba(74,222,128,0.48)" stroke-width="1" />
+                <rect x="62" y="85" width="16" height="5" rx="2" fill="rgba(74,222,128,0.22)"
+                    stroke="rgba(74,222,128,0.38)" stroke-width="1" />
+                <rect x="64" y="90" width="12" height="4" rx="2" fill="rgba(74,222,128,0.17)"
+                    stroke="rgba(74,222,128,0.3)" stroke-width="1" />
+                <text x="70" y="112" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700"
+                    text-anchor="middle" fill="rgba(74,222,128,0.5)" letter-spacing="0.08em">INNOVATION</text>
+            </svg>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="sec-label">Sources & Credits</div>
+        <div class="footer">
+            <div class="footer-card">
+                <div class="footer-row">
+                    <div class="footer-row-lbl">📹 Video Recording</div>
+                    <div><a href="https://www.youtube.com/live/z-F0KwcI9tQ?feature=share"
+                            target="_blank">youtube.com/live/z-F0KwcI9tQ</a></div>
+                </div>
+                <div class="footer-row">
+                    <div class="footer-row-lbl">🎤 Speakers</div>
+                    <div class="footer-row-val">Dr. Mata Ramírez · Mgtr. Lina María Toro Quintero · Alan (Physics panel)
+                        · Angie (Renewable Energy)</div>
+                </div>
+                <div class="footer-row">
+                    <div class="footer-row-lbl">🏛️ Organizer</div>
+                    <div class="footer-row-val">UNAD — Universidad Nacional Abierta y a Distancia</div>
+                </div>
+                <div class="footer-row">
+                    <div class="footer-row-lbl">📅 Event Date</div>
+                    <div class="footer-row-val">April 15, 2026 · 9 hours of live streaming</div>
+                </div>
+                <div class="footer-row">
+                    <div class="footer-row-lbl">🌐 Official Website</div>
+                    <div><a href="https://www.unad.edu.co/" target="_blank">unad.edu.co</a></div>
+                </div>
+            </div>
+            <div class="credit-card">
+                <div class="avatar">SRH</div>
+                <div>
+                    <div class="credit-name">Santiago Rico Hernández</div>
+                    <div class="credit-sub">UNAD Student<br>Infographic Designer · 2026<br>VI Basic Sciences Workshop
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL OVERLAY -->
+    <div id="modal-overlay">
+        <div id="modal-content">
+            <button class="close-btn" id="close-modal">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // MODAL LOGIC
+        const modal = document.getElementById('modal-overlay');
+        const modalBody = document.getElementById('modal-body');
+        const closeBtn = document.getElementById('close-modal');
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                const clone = card.cloneNode(true);
+                // remove tilt attributes and set transform none
+                clone.removeAttribute('data-tilt');
+                clone.style.transform = 'none';
+                clone.style.willChange = 'auto';
+                
+                modalBody.innerHTML = '';
+                modalBody.appendChild(clone);
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // prevent scrolling behind
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initialize tsParticles
+        tsParticles.load("tsparticles", {
+            fpsLimit: 60,
+            interactivity: {
+                events: {
+                    onHover: {
+                        enable: true,
+                        mode: "repulse"
+                    },
+                    resize: true
+                },
+                modes: {
+                    repulse: {
+                        distance: 120,
+                        duration: 0.4
+                    }
+                }
+            },
+            particles: {
+                color: {
+                    value: ["#4f9eff", "#a78bfa", "#2dd4bf", "#fb7c5b", "#fbbf24", "#4ade80"]
+                },
+                links: {
+                    color: "#ffffff",
+                    distance: 150,
+                    enable: true,
+                    opacity: 0.35, /* Increased opacity */
+                    width: 1.5 /* Thicker links */
+                },
+                move: {
+                    direction: "none",
+                    enable: true,
+                    outModes: {
+                        default: "bounce"
+                    },
+                    random: false,
+                    speed: 1,
+                    straight: false
+                },
+                number: {
+                    density: {
+                        enable: true,
+                        area: 800
+                    },
+                    value: 80 /* More particles */
+                },
+                opacity: {
+                    value: 0.7 /* Brighter particles */
+                },
+                shape: {
+                    type: "circle"
+                },
+                size: {
+                    value: { min: 2, max: 4 } /* Larger particles */
+                }
+            },
+            detectRetina: true
+        });
+    </script>
+</body>
+
+</html>
